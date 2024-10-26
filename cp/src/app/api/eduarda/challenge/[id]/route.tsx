@@ -2,7 +2,7 @@ import { TipoTrabalhos } from "@/types";
 import { promises as fs } from "fs";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, { params }: { params: { id: number } }) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
     try {
         // Carregar o arquivo JSON
         const file = await fs.readFile(process.cwd() + '/src/data/eduarda.json', 'utf-8');
@@ -11,7 +11,7 @@ export async function GET(request: Request, { params }: { params: { id: number }
         // Certificar que o campo 'challenge' existe
         if (data && data.challenge) {
             // Encontrar o trabalho específico pelo ID nos 'challenge'
-            const trabalho = data.challenge.find((p: TipoTrabalhos) => p.id == params.id);
+            const trabalho = data.challenge.find((p: TipoTrabalhos) => p.id === Number(params.id));
 
             // Verificar se o trabalho foi encontrado
             if (!trabalho) {
@@ -28,7 +28,7 @@ export async function GET(request: Request, { params }: { params: { id: number }
     }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: number } }) {
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
     try {
         // Carregar o arquivo JSON
         const file = await fs.readFile(process.cwd() + '/src/data/eduarda.json', 'utf-8');
@@ -37,7 +37,7 @@ export async function DELETE(request: Request, { params }: { params: { id: numbe
         // Certificar que o campo 'challenge' existe
         if (data && data.challenge) {
             // Encontrar o índice do item a ser deletado
-            const idTrabalho = data.challenge.findIndex((p: TipoTrabalhos) => p.id == params.id);
+            const idTrabalho = data.challenge.findIndex((p: TipoTrabalhos) => p.id === Number(params.id));
 
             // Verificar se o item foi encontrado
             if (idTrabalho === -1) {
@@ -48,7 +48,7 @@ export async function DELETE(request: Request, { params }: { params: { id: numbe
             data.challenge.splice(idTrabalho, 1);
 
             // Atualizar o arquivo JSON
-            const fileUpdate = JSON.stringify(data, null, 2); // Adicione 'null, 2' para formatar
+            const fileUpdate = JSON.stringify(data, null, 2);
             await fs.writeFile(process.cwd() + '/src/data/eduarda.json', fileUpdate);
 
             return NextResponse.json({ msg: "Trabalho removido com sucesso!" });
@@ -60,7 +60,7 @@ export async function DELETE(request: Request, { params }: { params: { id: numbe
     }
 }
 
-export async function PUT(request: Request, { params }: { params: { id: number } }) {
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
     try {
         // Carregar o arquivo JSON
         const file = await fs.readFile(process.cwd() + '/src/data/eduarda.json', 'utf-8');
@@ -69,7 +69,7 @@ export async function PUT(request: Request, { params }: { params: { id: number }
         // Certificar que o campo 'challenge' existe
         if (data && data.challenge) {
             // Encontrar o índice do challenge a ser atualizado
-            const indice = data.challenge.findIndex((p: TipoTrabalhos) => p.id == params.id);
+            const indice = data.challenge.findIndex((p: TipoTrabalhos) => p.id === Number(params.id));
 
             if (indice !== -1) {
                 // Obter os dados atualizados do corpo da requisição
@@ -79,12 +79,12 @@ export async function PUT(request: Request, { params }: { params: { id: number }
                 data.challenge[indice] = { ...data.challenge[indice], ...trabalhoAtualizado };
 
                 // Atualizar o arquivo JSON
-                const fileUpdate = JSON.stringify(data, null, 2); // Adicione um `null, 2` para formatação legível
+                const fileUpdate = JSON.stringify(data, null, 2);
                 await fs.writeFile(process.cwd() + '/src/data/eduarda.json', fileUpdate);
 
-                return NextResponse.json({ msg: "challenge atualizado com sucesso!" });
+                return NextResponse.json({ msg: "Challenge atualizado com sucesso!" });
             } else {
-                return NextResponse.json({ error: "challenge não encontrado." });
+                return NextResponse.json({ error: "Challenge não encontrado." });
             }
         } else {
             return NextResponse.json({ error: "Campo 'challenge' não encontrado no JSON." });
