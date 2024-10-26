@@ -2,7 +2,11 @@ import { TipoTrabalhos } from "@/types";
 import { promises as fs } from "fs";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+interface Params {
+    id: string;
+}
+
+export async function GET(request: Request, { params }: { params: Params }) {
     try {
         // Carregar o arquivo JSON
         const file = await fs.readFile(process.cwd() + '/src/data/eduarda.json', 'utf-8');
@@ -28,7 +32,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Params }) {
     try {
         // Carregar o arquivo JSON
         const file = await fs.readFile(process.cwd() + '/src/data/eduarda.json', 'utf-8');
@@ -60,7 +64,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: Params }) {
     try {
         // Carregar o arquivo JSON
         const file = await fs.readFile(process.cwd() + '/src/data/eduarda.json', 'utf-8');
