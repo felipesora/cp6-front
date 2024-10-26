@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import Instagram from '../../Images/instagram.png'
 import Linkedin from '../../Images/linkedin.png';
 import Github from '../../Images/github.png';

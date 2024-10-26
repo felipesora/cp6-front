@@ -1,7 +1,6 @@
 "use client";
 import { TipoTrabalhos } from "@/types";
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import Link from 'next/link';
 
@@ -13,7 +12,6 @@ import iconeAdicionar from "@/Images/icone-adicionar.png";
 
 export default function Sora() {
 
-    const navigate = useRouter();
 
     const [lista, setLista] = useState<TipoTrabalhos[]>([]);
 

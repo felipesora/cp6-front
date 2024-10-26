@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import { TipoTrabalhos } from "@/types";
-import { log } from "console";
 
 // Métodos GET
 
